@@ -1,0 +1,28 @@
+.item--delete{
+    display: block;
+    font-family: sans-serif;
+    font-size: 18px;
+    margin: 5px 0;
+    padding: 5px;
+    background-color: #F5F5F5;
+}
+.item--delete:nth-of-type(2n){
+    background-color: #DCDCDC;
+}
+.item__delete{
+    font-size: 20px;
+    padding: 0 7.5px;
+    color: white;
+    border: 2px solid white;
+    border-radius: 3px;
+    outline: none;
+    background-color: rgba(0,0,0,0);
+    transition: background-color 0.5s;
+    margin: 0 5px;
+}
+.item__delete:hover{
+    background-color: red;
+}
+.crossed{
+    text-decoration: line-through;
+}

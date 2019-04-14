@@ -1,6 +1,8 @@
 import React from 'react';
-import BasketList from './Lists/BasketList';
-import GroceryList from './Lists/GroceryList';
+import BasketList from '../Lists/BasketList/BasketList';
+import GroceryList from '../Lists/GroceryList/GroceryList';
+
+import './CheckList.css';
 
 class CheckList extends React.Component{
     constructor(props){
@@ -21,13 +23,28 @@ class CheckList extends React.Component{
                     },
                     ...previousState.BasketItems.slice(isInBasketIndex+1)
                 ]};
-            return { BasketItems:[...previousState.BasketItems,{ count: 1 , item}]};
+            return { BasketItems:[...previousState.BasketItems,{ count: 1 , item, isCrossed: false}]};
+        });
+    }
+    handleCrossedItem = (groceryItem) =>{
+        this.setState((previousState)=>{
+            let itemIndex = previousState.BasketItems.findIndex((basketItem) => basketItem.item === groceryItem.item);
+            return {
+                BasketItems:[
+                    ...previousState.BasketItems.slice(0,itemIndex),
+                    {
+                        ...previousState.BasketItems[itemIndex],
+                        isCrossed : !previousState.BasketItems[itemIndex].isCrossed
+                    },
+                    ...previousState.BasketItems.slice(itemIndex+1)
+                ]
+            };
         });
     }
     handleRemoveBasket = (groceryItem)=>{
         this.setState((previousState)=>{
             if(groceryItem.count === 1){
-                let newBasketItems = previousState.BasketItems.filter((item) => item.item !== groceryItem.item);
+                let newBasketItems = previousState.BasketItems.filter((basketItem) => basketItem.item !== groceryItem.item);
                 return { BasketItems:[...newBasketItems] };
             }
             let indexOfItem = previousState.BasketItems.findIndex((item)=> groceryItem.item === item.item);
@@ -41,13 +58,23 @@ class CheckList extends React.Component{
             ]}; 
         });
     }
+    handleClear = () =>{
+        this.setState({
+            BasketItems : []
+        });
+    }
     render(){
         const { BasketItems } = this.state;
         return(
-            <>
-             <GroceryList onAddBasket={this.handleAddBasket}></GroceryList>
-             <BasketList basketItems={BasketItems} onRemoveBasket={this.handleRemoveBasket}></BasketList>
-            </>
+            <section className="checklist">
+                <GroceryList onAddBasket={this.handleAddBasket}></GroceryList>
+                <BasketList 
+                    basketItems={BasketItems} 
+                    onCrossedItem={this.handleCrossedItem} 
+                    onRemoveBasket={this.handleRemoveBasket}
+                    onClear={this.handleClear}>
+                </BasketList>
+            </section>
         );
     }
 }

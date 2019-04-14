@@ -1,0 +1,30 @@
+.basket{
+    display: flex;
+    flex-direction: column;
+    width: 35%;
+}
+.basket__title{
+    font-family: sans-serif;
+    font-size: 25px;
+    width: 700;
+}
+.basket__header{
+    display: flex;
+    justify-content: space-between;
+}
+.basket__header > button{
+    outline: 0;
+    border-radius: 10px;
+    border: 0;
+    height: fit-content;
+    margin-top: 25px;
+    padding: 5px 10px;
+    background-color: #E4E4E4;
+    color: white;
+    font-size: 25px;
+    text-transform: uppercase;
+    transition: background-color 0.5s;
+}
+.basket__header > button:hover{
+    background-color: red;
+}
